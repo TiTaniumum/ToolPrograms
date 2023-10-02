@@ -15,11 +15,21 @@ namespace DataGenerationTool
         public Form1()
         {
             InitializeComponent();
+            //InitHooks(); // old hook that doesn't catch outside programm
+            form = this;
+            InitGlobalHook();
         }
         Random random = new Random(DateTime.Now.Millisecond);
         DateTime result;
         bool isResultDateTimeDefined = false;
         private void button1_Click(object sender, EventArgs e)
+        {
+            GenerateDate();
+        }
+
+        
+
+        private void GenerateDate()
         {
             DateTime from = dateTimePicker1.Value;
             DateTime to = dateTimePicker2.Value;
@@ -28,10 +38,10 @@ namespace DataGenerationTool
             isResultDateTimeDefined = true;
             textBoxResult.Text = (result).ToString(comboBoxFormat.Text);
         }
-
+        private void CopyToClipboard() => Clipboard.SetText(textBoxResult.Text);
         private void buttonCopy_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(textBoxResult.Text);
+            CopyToClipboard();
             toolStripStatusLabel1.Text = "Status: Date Copied to Buffer";
         }
 
