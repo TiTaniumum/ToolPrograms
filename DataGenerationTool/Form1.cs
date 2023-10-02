@@ -27,16 +27,25 @@ namespace DataGenerationTool
             GenerateDate();
         }
 
-        
-
         private void GenerateDate()
         {
             DateTime from = dateTimePicker1.Value;
             DateTime to = dateTimePicker2.Value;
+            if (to<from)
+            {
+                Log("Incorrect Date! 'From' should be less than 'To'!");
+                return;
+            }
             TimeSpan resultTS = TimeSpan.FromDays(random.Next((to-from).Days));
             result = from + resultTS;
             isResultDateTimeDefined = true;
-            textBoxResult.Text = (result).ToString(comboBoxFormat.Text);
+            try
+            {
+                textBoxResult.Text = (result).ToString(comboBoxFormat.Text);
+            }catch(Exception ex)
+            {
+                Log("Format: "+ex.Message);
+            }
         }
         private void CopyToClipboard() => Clipboard.SetText(textBoxResult.Text);
         private void buttonCopy_Click(object sender, EventArgs e)
@@ -47,7 +56,7 @@ namespace DataGenerationTool
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(isResultDateTimeDefined) textBoxResult.Text = (result).ToString(comboBoxFormat.Text);
+            if (isResultDateTimeDefined) textBoxResult.Text = (result).ToString(comboBoxFormat.Text);
         }
     }
 }

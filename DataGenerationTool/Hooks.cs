@@ -23,6 +23,7 @@ namespace DataGenerationTool
         void GenerateAndCopy()
         {
             GenerateDate();
+            if(textBoxResult.Text!=string.Empty)
             CopyToClipboard();
         }
         void InitGlobalHook()
